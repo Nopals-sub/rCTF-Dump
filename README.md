@@ -10,7 +10,7 @@ Script hanya memakai endpoint read/login dan GET untuk lampiran. Script **tidak 
 
 ## Fitur Utama
 
-- **Otomatisasi Nama Folder**: Default folder output menyesuaikan nama domain/host dari URL (misal: `https://platform.ctf.fortid.com/` otomatis disimpan ke folder `platform.ctf.fortid.com/`).
+- **Otomatisasi Nama Folder**: Default folder output menyesuaikan nama domain/host dari URL (misal: `https://ctf.example.com/` otomatis disimpan ke folder `ctf.example.com/`).
 - **Concurrent Worker Pool (`-t` / `--threads`)**: Unduhan paralel multi-thread (default: 4 worker) sehingga proses dump jauh lebih cepat.
 - **Resume & Incremental Download**: Melewati lampiran yang sudah terunduh lengkap sebelumnya berdasarkan ukuran file (`[CACHE]`), menghemat bandwidth dan waktu saat proses diulang. Opsi `--overwrite` tersedia untuk unduh ulang paksa.
 - **Ekstraksi Lampiran Deskripsi**: Mendeteksi dan mengunduh tautan file atau lampiran yang disematkan author di dalam body teks Markdown deskripsi (termasuk upload relatif dan link file eksternal).
@@ -34,16 +34,16 @@ python3 -m pip install requests
 
 ### 1. Dump Standar (No-login)
 
-Folder output otomatis menjadi `platform.ctf.fortid.com/`:
+Folder output otomatis menjadi `ctf.example.com/`:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login
+python3 rctf_dumper.py https://ctf.example.com/ --no-login
 ```
 
 Menentukan folder output manual:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login -o my_ctf_dump
+python3 rctf_dumper.py https://ctf.example.com/ --no-login -o my_ctf_dump
 ```
 
 ### 2. Memeriksa Daftar Challenge (`--list-only`)
@@ -51,7 +51,7 @@ python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login -o my_ctf_dum
 Melihat challenge yang tersedia beserta poin dan jumlah solve tanpa mengunduh file apa pun:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login --list-only
+python3 rctf_dumper.py https://ctf.example.com/ --no-login --list-only
 ```
 
 ### 3. Menggunakan Filter
@@ -59,19 +59,19 @@ python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login --list-only
 Filter satu atau lebih kategori:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login -c web,pwn
+python3 rctf_dumper.py https://ctf.example.com/ --no-login -c web,pwn
 ```
 
 Filter berdasarkan nama challenge:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login --chall "Baby"
+python3 rctf_dumper.py https://ctf.example.com/ --no-login --chall "Baby"
 ```
 
 Filter berdasarkan jumlah solve:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login --min-solves 100
+python3 rctf_dumper.py https://ctf.example.com/ --no-login --min-solves 100
 ```
 
 ### 4. Mengatur Thread & Cache (Resume)
@@ -79,13 +79,13 @@ python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login --min-solves 
 Gunakan 8 thread untuk mempercepat unduhan:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login -t 8
+python3 rctf_dumper.py https://ctf.example.com/ --no-login -t 8
 ```
 
 Jika proses terhenti lalu dijalankan kembali, file yang sudah cocok ukurannya akan otomatis dilewati (`[CACHE]`). Untuk memaksa mengunduh ulang seluruh file:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login -f
+python3 rctf_dumper.py https://ctf.example.com/ --no-login -f
 ```
 
 ### 5. Login Menggunakan Team Token
@@ -93,7 +93,7 @@ python3 rctf_dumper.py https://platform.ctf.fortid.com/ --no-login -f
 Token diminta secara tersembunyi di terminal:
 
 ```bash
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --login
+python3 rctf_dumper.py https://ctf.example.com/ --login
 ```
 
 Atau set environment variable sebelum menjalankan:
@@ -101,14 +101,14 @@ Atau set environment variable sebelum menjalankan:
 ```bash
 read -s -p 'Team token: ' CTF_TEAM_TOKEN; echo
 export CTF_TEAM_TOKEN
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --login
+python3 rctf_dumper.py https://ctf.example.com/ --login
 ```
 
 Dengan sesi login, filter `--solved` atau `--unsolved` dapat digunakan:
 
 ```bash
 # Hanya unduh challenge yang belum diselesaikan oleh tim
-python3 rctf_dumper.py https://platform.ctf.fortid.com/ --login --unsolved
+python3 rctf_dumper.py https://ctf.example.com/ --login --unsolved
 ```
 
 ---
@@ -117,8 +117,8 @@ python3 rctf_dumper.py https://platform.ctf.fortid.com/ --login --unsolved
 
 | Argumen | Keterangan |
 | :--- | :--- |
-| `url` | Root URL situs CTF target (misal: `https://platform.ctf.fortid.com/`) |
-| `-o, --output DIR` | Nama folder tujuan (default: nama host URL, mis. `platform.ctf.fortid.com`) |
+| `url` | Root URL situs CTF target (misal: `https://ctf.example.com/`) |
+| `-o, --output DIR` | Nama folder tujuan (default: nama host URL, mis. `ctf.example.com`) |
 | `-t, --threads N` | Jumlah concurrent worker threads (default: 4) |
 | `-f, --overwrite` | Timpa/unduh ulang file yang sudah ada (abaikan cache resume) |
 | `-c, --category CAT` | Filter kategori (case-insensitive substring/regex atau koma, misal `web,pwn`) |

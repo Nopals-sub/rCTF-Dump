@@ -9,12 +9,12 @@ import rctf_dumper
 
 class TestRCTFDumper(unittest.TestCase):
     def test_root_url(self):
-        self.assertEqual(rctf_dumper.root_url("https://platform.ctf.fortid.com/"), "https://platform.ctf.fortid.com")
-        self.assertEqual(rctf_dumper.root_url("platform.ctf.fortid.com/challenges"), "https://platform.ctf.fortid.com")
+        self.assertEqual(rctf_dumper.root_url("https://ctf.example.com/"), "https://ctf.example.com")
+        self.assertEqual(rctf_dumper.root_url("ctf.example.com/challenges"), "https://ctf.example.com")
         self.assertEqual(rctf_dumper.root_url("http://127.0.0.1:8000/login"), "http://127.0.0.1:8000")
 
     def test_default_output_dir(self):
-        self.assertEqual(rctf_dumper.default_output_dir("https://platform.ctf.fortid.com/"), "platform.ctf.fortid.com")
+        self.assertEqual(rctf_dumper.default_output_dir("https://ctf.example.com/"), "ctf.example.com")
         self.assertEqual(rctf_dumper.default_output_dir("http://ctf.local:8080/"), "ctf.local")
 
     def test_extract_filename_from_url_path(self):
@@ -47,7 +47,7 @@ class TestRCTFDumper(unittest.TestCase):
         Upload link: /uploads/feedbeef/patch.diff
         """
         existing = [{"name": "existing.txt", "url": "/uploads/111/existing.txt"}]
-        files = rctf_dumper.extract_description_files(desc, "https://platform.ctf.fortid.com", existing)
+        files = rctf_dumper.extract_description_files(desc, "https://ctf.example.com", existing)
         names = {f["name"] for f in files}
         self.assertIn("handout.zip", names)
         self.assertIn("patch.diff", names)
@@ -93,7 +93,7 @@ class TestRCTFDumper(unittest.TestCase):
             # 1. Matching declared_size skips network call completely
             ok, info = rctf_dumper.download_file(
                 mock_session,
-                "https://platform.ctf.fortid.com",
+                "https://ctf.example.com",
                 "/uploads/abc/test.zip",
                 dest,
                 max_bytes=1000000,
@@ -115,7 +115,7 @@ class TestRCTFDumper(unittest.TestCase):
 
             ok, info = rctf_dumper.download_file(
                 mock_session,
-                "https://platform.ctf.fortid.com",
+                "https://ctf.example.com",
                 "/uploads/abc/test.zip",
                 dest,
                 max_bytes=1000000,

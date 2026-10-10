@@ -462,7 +462,7 @@ class DownloadStats:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Dumper read-only challenge rCTF v1/v2 dan lampiran publik")
-    parser.add_argument("url", help="Root URL situs CTF, mis. https://platform.ctf.fortid.com/")
+    parser.add_argument("url", help="Root URL situs CTF, mis. https://ctf.example.com/")
     parser.add_argument("-o", "--output", default=None, help="Folder output (default: nama host/domain dari URL target)")
 
     # Auth

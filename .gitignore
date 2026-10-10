@@ -19,8 +19,10 @@ ENV/
 
 # Default CTF dump outputs
 ctf_dump/
-platform.ctf.fortid.com/
 *_dump/
+*.ctf.*/
+ctf.*/
+platform.*/
 
 # OS / Editor files
 .DS_Store
