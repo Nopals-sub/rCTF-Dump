@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Temporary / partial downloads
+*.part
+*.tmp
+
+# Secret / token files
+.env
+*.token
+
+# Default CTF dump outputs
+ctf_dump/
+platform.ctf.fortid.com/
+*_dump/
+
+# OS / Editor files
+.DS_Store
+.idea/
+.vscode/
